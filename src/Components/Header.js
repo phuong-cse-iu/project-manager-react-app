@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import './header.css';
 
 export default class Header extends Component {
   constructor(props) {
@@ -14,6 +15,11 @@ export default class Header extends Component {
       </div>
     )
   }
+}
+
+const headingStyle = {
+  color: 'green', 
+  fontSize: '50px'
 }
 
 Header.defaultProps = {
