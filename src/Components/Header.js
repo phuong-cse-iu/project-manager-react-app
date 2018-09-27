@@ -11,7 +11,7 @@ export default class Header extends Component {
     const { title } = this.props;
     return (
       <div>
-        <h1>{title}</h1>
+        <h1 style={{headingStyle}}>{title}</h1>
       </div>
     )
   }
