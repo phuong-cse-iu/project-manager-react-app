@@ -4,6 +4,7 @@ import './App.css';
 import Project from './Components/Project';
 import Header from './Components/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Contacts from './Components/Contacts';
 
 class App extends Component {
   constructor(props) {
@@ -31,7 +32,8 @@ class App extends Component {
       <div className="App">
         <Header title="My App"/>
         <div className="container">
-          <Project projects={this.state.projects}/>
+          {/* <Project projects={this.state.projects}/> */}
+          <Contacts />
         </div>
       </div>
     );
