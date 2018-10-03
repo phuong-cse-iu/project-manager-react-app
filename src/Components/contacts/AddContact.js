@@ -1,27 +1,33 @@
 import React, { Component } from 'react'
 
 class AddContact extends Component {
-  state = {
-    name: '',
-    email: '',
-    phone: '',
+  
+  constructor(props) {
+    super(props);
+
+    this.nameInput = React.createRef()
+    this.emailInput = React.createRef()
+    this.phoneInput = React.createRef()
   }
 
-  onFieldsChange = (e) => {
-    this.setState(
-      {
-        [e.target.name] : e.target.value
-      }
-    );
-  }
+  static defaultProps = {
+    name: 'John',
+    email: 'john@example.com',
+    phone: '222-657-8999'
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    const contact = {
+      name: this.nameInput.current.value,
+      email: this.emailInput.current.value,
+      phone: this.phoneInput.current.value
+    }
+    console.log(contact);
   }
 
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone } = this.props;
     return (
       <div className="card mb-3">
         <div className="card-header">
@@ -35,8 +41,8 @@ class AddContact extends Component {
                 type="text" className="form-control form-control-lg"
                 placeholder="Enter Name..."
                 name="name"
-                value={name}
-                onChange={this.onFieldsChange}
+                defaultValue={name}
+                ref={this.nameInput}
               />
             </div>
 
@@ -46,8 +52,8 @@ class AddContact extends Component {
                 type="email" className="form-control form-control-lg"
                 placeholder="Enter Email..."
                 name="email"
-                value={email}
-                onChange={this.onFieldsChange}
+                defaultValue={email}
+                ref={this.emailInput}
               />
             </div>
 
@@ -57,8 +63,8 @@ class AddContact extends Component {
                 type="text" className="form-control form-control-lg"
                 placeholder="Enter Phone..."
                 name="phone"
-                value={phone}
-                onChange={this.onFieldsChange}
+                defaultValue={phone}
+                ref={this.phoneInput}
               />
             </div>
             <input type="submit" className="submit" value="Add Contact"
