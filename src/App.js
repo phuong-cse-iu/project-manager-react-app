@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Project from './Components/Project';
-import Header from './Components/Header';
+import Header from './layout/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Contacts from './Components/Contacts';
+import Contacts from './Components/contacts/Contacts';
+import { Provider } from './context';
+import AddContact from './Components/contacts/AddContact';
 
 class App extends Component {
   constructor(props) {
@@ -29,13 +30,16 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <Provider>
+        <div className="App">
         <Header title="My App"/>
+        <AddContact />
         <div className="container">
           {/* <Project projects={this.state.projects}/> */}
           <Contacts />
         </div>
       </div>
+      </Provider>
     );
   }
 }
