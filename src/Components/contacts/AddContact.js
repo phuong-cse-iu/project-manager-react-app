@@ -4,21 +4,68 @@ import uuid from "uuid";
 import TextInputGroup from "../../layout/ TextInputGroup";
 
 class AddContact extends Component {
-  state = {
-    name: "",
-    email: "",
-    phone: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      email: "",
+      phone: "",
+      errors: {
+        
+      }
+    };
+  }
+
+  onComponentDidMount() {
+    this.setState({
+      name: "",
+      email: "",
+      phone: "",
+      errors: {
+       
+      }
+    });
+  }
+
+  validateFields(valueToBeValidated, errType) {
+    if (valueToBeValidated === "") {
+      this.setState({ errors: { [errType]: `${errType} is required` } });
+      return;
+    }
+  }
 
   onFieldsChange = e => {
+    const { name, email, phone } = this.state;
     this.setState({
       [e.target.name]: e.target.value
     });
+    this.validateFields(name, "name");
+    this.validateFields(email, "email");
+    this.validateFields(phone, "phone");
   };
 
   onSubmit = (dispatch, e) => {
     e.preventDefault();
     const { name, email, phone } = this.state;
+    if (name === "") {
+      this.setState({ errors: { name: 'name is required' } });
+      return;
+    }
+
+    if (email === "") {
+      this.setState({ errors: { email: 'email is required' } });
+      return;
+    }
+
+    if (phone === "") {
+      this.setState({ errors: { phone: 'phone is required' } });
+      return;
+    }
+    // // Check for errors
+    // this.validateFields(name, "name");
+    // this.validateFields(email, "email");
+    // this.validateFields(phone, "phone");
+
     const newContact = {
       id: uuid(),
       name: name,
@@ -31,19 +78,19 @@ class AddContact extends Component {
     this.setState({
       name: "",
       email: "",
-      phone: ""
+      phone: "",
+      errors: {}
     });
     console.log(this.state);
   };
 
   render() {
-    const { name, email, phone } = this.state;
+    const { name, email, phone, errors } = this.state;
     return (
       <Consumer>
         {value => {
           const { dispatch } = value;
           return (
-            <React.Fragment>
               <div className="card mb-3">
                 <div className="card-header">Add Contact</div>
                 <div className="card-body">
@@ -54,6 +101,7 @@ class AddContact extends Component {
                       placeholder="Enter Name"
                       value={name}
                       onChange={this.onFieldsChange}
+                      error={errors.name}
                     />
 
                     <TextInputGroup
@@ -63,6 +111,7 @@ class AddContact extends Component {
                       placeholder="Enter email"
                       value={email}
                       onChange={this.onFieldsChange}
+                      error={errors.email}
                     />
 
                     <TextInputGroup
@@ -71,6 +120,7 @@ class AddContact extends Component {
                       placeholder="Enter Phone"
                       value={phone}
                       onChange={this.onFieldsChange}
+                      error={errors.phone}
                     />
                     <input
                       type="submit"
@@ -81,7 +131,6 @@ class AddContact extends Component {
                   </form>
                 </div>
               </div>
-            </React.Fragment>
           );
         }}
       </Consumer>
